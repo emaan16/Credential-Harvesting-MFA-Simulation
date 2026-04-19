@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MFA Security Gateway</title>
+    <style>
+        body {
+            background-color: #0a0b10;
+            color: #00ff41; /* Cyber Green */
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(16, 18, 26, 0.95);
+            padding: 50px;
+            border: 2px solid #00ff41;
+            border-radius: 5px;
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.3);
+            text-align: center;
+            width: 380px;
+        }
+        h1 {
+            font-size: 26px;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #00ff41;
+        }
+        .status-line {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        input {
+            background: #000;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 15px;
+            width: 85%;
+            text-align: center;
+            font-size: 28px;
+            letter-spacing: 8px;
+            margin: 20px 0;
+            outline: none;
+            box-shadow: inset 0 0 5px #00ff41;
+        }
+        button {
+            background-color: #00ff41;
+            color: #000;
+            border: none;
+            padding: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 100%;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #fff;
+            box-shadow: 0 0 20px #fff;
+        }
+        #log {
+            margin-top: 25px;
+            font-size: 14px;
+            min-height: 20px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Identity Vault</h1>
+        <div class="status-line">SYSTEM STATUS: ENCRYPTED // PORT: 443</div>
+        <p>Enter Authorized 6-Digit Token</p>
+        
+        <input id="otp_input" type="password" maxlength="6" placeholder="******">
+        
+        <button onclick="verifyToken()">Initialize Authentication</button>
+        
+        <div id="log"></div>
+    </div>
+
+    <script>
+        function verifyToken() {
+            var userInput = document.getElementById("otp_input").value;
+            var logDisplay = document.getElementById("log");
+            
+            // Hardcoded authorized token
+            const AUTHORIZED_TOKEN = "123456";
+
+            if (userInput === AUTHORIZED_TOKEN) {
+                // Success State
+                logDisplay.style.color = "#00ff41";
+                logDisplay.innerHTML = "VALIDATED: REDIRECTING TO SECURE CORE...";
+                setTimeout(function(){
+                    window.location.href = "https://www.google.com";
+                }, 2000);
+            } else {
+                // Failure State
+                logDisplay.style.color = "#ff003c"; // Warning Red
+                logDisplay.innerHTML = "CRITICAL ERROR: UNAUTHORIZED TOKEN DETECTED";
+                
+                // Clear input for retry
+                document.getElementById("otp_input").value = "";
+                
+                // Add a small shake effect if you want to get fancy
+                logDisplay.style.fontWeight = "bold";
+            }
+        }
+    </script>
+</body>
+</html>
