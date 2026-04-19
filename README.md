@@ -5,9 +5,9 @@ Credential harvesting &amp; MFA mitigation demo. This project uses the Social-En
 This project demonstrates the vulnerability of HTTP login events to Social Engineering (SET) and Network Forensics (Wireshark). It also showcases a custom MFA gateway to mitigate account takeover.
 
 ## Project Structure
-- **/Code**: Contains the HTML/JS for the MFA simulation.
-- **/Documentation**: Project proposal and final report.
-- **/Presentation**: Slides and live demo video (MP4).   
+- **Code**: Contains the HTML/JS for the MFA simulation.
+- **Documentation**: Project proposal and final report.
+- **Presentation**: Slides and live demo video (MP4).   
 
  ## Large Project Files (Presentation & Video)
 You can access the project presentation and the demo video via the link below:
