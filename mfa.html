@@ -82,15 +82,20 @@
         
         <input id="otp_input" type="password" maxlength="6" placeholder="******">
         
-        <button onclick="verifyToken()">Initialize Authentication</button>
+        <button id="auth_btn" onclick="verifyToken()">Initialize Authentication</button>
         
         <div id="log"></div>
     </div>
 
     <script>
+        // Track failed attempts globally
+        var failedAttempts = 0;
+
         function verifyToken() {
             var userInput = document.getElementById("otp_input").value;
             var logDisplay = document.getElementById("log");
+            var inputField = document.getElementById("otp_input");
+            var authButton = document.getElementById("auth_btn");
             
             // Hardcoded authorized token
             const AUTHORIZED_TOKEN = "123456";
@@ -104,14 +109,27 @@
                 }, 2000);
             } else {
                 // Failure State
-                logDisplay.style.color = "#ff003c"; // Warning Red
-                logDisplay.innerHTML = "CRITICAL ERROR: UNAUTHORIZED TOKEN DETECTED";
+                failedAttempts++; // Increment counter
                 
-                // Clear input for retry
-                document.getElementById("otp_input").value = "";
-                
-                // Add a small shake effect if you want to get fancy
-                logDisplay.style.fontWeight = "bold";
+                if (failedAttempts >= 3) {
+                    // LOCKOUT LOGIC
+                    logDisplay.style.color = "#ff003c";
+                    logDisplay.innerHTML = "SYSTEM PERMANENTLY LOCKED: TOO MANY FAILURES";
+                    
+                    // Disable the interface
+                    inputField.disabled = true;
+                    authButton.disabled = true;
+                    authButton.style.backgroundColor = "#333";
+                    authButton.style.cursor = "not-allowed";
+                } else {
+                    // Standard Error State
+                    logDisplay.style.color = "#ff003c"; 
+                    logDisplay.innerHTML = "CRITICAL ERROR: UNAUTHORIZED TOKEN DETECTED (" + failedAttempts + "/3)";
+                    
+                    // Clear input for retry
+                    inputField.value = "";
+                    logDisplay.style.fontWeight = "bold";
+                }
             }
         }
     </script>
